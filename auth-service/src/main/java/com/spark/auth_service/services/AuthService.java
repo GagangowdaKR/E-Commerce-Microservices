@@ -8,5 +8,5 @@ public interface AuthService {
 
     ResponseEntity<Map<String, Object>> register(User user);
 
-    ResponseEntity<Map<String, Object>> login(User user);
+    ResponseEntity<Map<String, Object>> login(String  username, String password);
 }

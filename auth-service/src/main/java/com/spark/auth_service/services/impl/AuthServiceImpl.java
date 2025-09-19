@@ -46,22 +46,22 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public ResponseEntity<Map<String, Object>> login(User user) {
-        User dbUser = userRepo.findByUsername(user.getUsername());
+    public ResponseEntity<Map<String, Object>> login(String username, String password) {
+        User dbUser = userRepo.findByUsername(username);
         if(dbUser == null){
             log.info("Username not found");
             Map<String, Object> response = Map.of("failure", "User not found with this Username");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
 
-        if(! passwordEncoder.matches(user.getPassword(), dbUser.getPassword())){
-            log.info("Passwords do not match : {} is Wrong", user.getPassword());
+        if(! passwordEncoder.matches(password, dbUser.getPassword())){
+            log.info("Passwords do not match : {} is Wrong", password);
             return new ResponseEntity<>(Map.of("failure", "Wrong Password"), HttpStatus.UNAUTHORIZED);
         }
 
         Map<String, Object> response = Map.of(
                 "message", "Login Successful !!",
-                "token", jwtUtil.generateToken(user.getUsername(), user.getRole())
+                "token", jwtUtil.generateToken(dbUser.getUsername(), dbUser.getRole())
         );
         log.info("jwt token has been generated and sent successfully");
         return new ResponseEntity<>(response, HttpStatus.OK);
