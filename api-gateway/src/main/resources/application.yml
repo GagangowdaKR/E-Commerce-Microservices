@@ -1,0 +1,43 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+
+          routes:
+            - id: auth-service
+              uri: http://localhost:8081
+              predicates:
+                - Path=/auth/** # No Filter for this service
+
+
+            - id: product-service
+              uri: http://localhost:8082
+              predicates:
+                - Path=/products/**
+              filters:
+                - JwtAuthFilter
+
+            - id: order-service
+              uri: http://localhost:8083
+              predicates:
+                - Path=/orders/**
+              filters:
+                - JwtAuthFilter
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
