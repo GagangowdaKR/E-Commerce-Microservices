@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/api-gateway/e-com.api-gateway.main.iml" filepath="$PROJECT_DIR$/.idea/modules/api-gateway/e-com.api-gateway.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/auth-service/e-com.auth-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/auth-service/e-com.auth-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/inventory-service/e-com.inventory-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/inventory-service/e-com.inventory-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/order-service/e-com.order-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/order-service/e-com.order-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/product-service/e-com.product-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/product-service/e-com.product-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/discovery-server/src/main/main.iml" filepath="$PROJECT_DIR$/discovery-server/src/main/main.iml" />

@@ -1,6 +1,6 @@
 package com.spark.order_service.controller;
 
-import com.spark.order_service.dto.OrderRequest;
+import com.spark.order_service.dto.PlaceOrderRequest;
 import com.spark.order_service.dto.OrderResponse;
 import com.spark.order_service.service.OrderService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +19,8 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderResponse placeOrder(@RequestBody OrderRequest request){
+    public OrderResponse placeOrder(@RequestBody PlaceOrderRequest request){
         return orderService.placeOrder(request);
     }
+
 }

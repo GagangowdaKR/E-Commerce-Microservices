@@ -22,7 +22,7 @@ spring:
     port: 5672
     username: guest
     password: guest
-
-custom:
-  rabbit:
-    exchange: product.exchange
+#
+#custom:
+#  rabbit:
+#    exchange: product.exchange
