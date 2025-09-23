@@ -5,8 +5,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class OrderRequest {
+public class PlaceOrderRequest {
 
     private String userId;
-    private List<OrderItemDto> itemList;
+    private List<OrderItemDto> itemList; // (prodId, quantity)
 }

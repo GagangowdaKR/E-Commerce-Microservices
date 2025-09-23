@@ -1,5 +1,6 @@
 package com.spark.product_service.controller;
 
+import com.spark.product_service.dto.ProductDto;
 import com.spark.product_service.entity.Product;
 import com.spark.product_service.service.ProductService;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +29,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product){
-        return ResponseEntity.ok(productService.create(product));
+    public ResponseEntity<Product> createProduct(@RequestBody ProductDto productDto){
+        return ResponseEntity.ok(productService.create(productDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product){
-        return productService.update(id, product);
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto){
+        return productService.update(id, productDto);
     }
 
     @DeleteMapping("/{id}")

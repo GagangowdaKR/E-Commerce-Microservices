@@ -1,46 +1,94 @@
 package com.spark.product_service.service.impl;
 
+import com.spark.product_service.dto.InventoryMessage;
+import com.spark.product_service.dto.ProductDto;
 import com.spark.product_service.entity.Product;
-import com.spark.product_service.event.ProductEventPublisher;
+import com.spark.product_service.event.RabbitMQProducer;
 import com.spark.product_service.repository.ProductRepository;
 import com.spark.product_service.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @Service
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepo;
-    private final ProductEventPublisher eventPublisher;
+    private final RabbitMQProducer eventPublisher;
 
-    public ProductServiceImpl(ProductRepository productRepo, ProductEventPublisher eventPublisher) {
+    public ProductServiceImpl(ProductRepository productRepo, RabbitMQProducer eventPublisher) {
         this.productRepo = productRepo;
         this.eventPublisher = eventPublisher;
     }
 
-    public Product create(Product product){
+    public Product create(ProductDto productDto){
+        Product product = new Product(productDto.getName(), productDto.getDescription(), productDto.getPrice());
         Product savedProd = productRepo.save(product);
-        eventPublisher.publishCreated(savedProd);
+
+//        Map<String, Object> msgToInventory = new HashMap<>();
+//        msgToInventory.put("productId", savedProd.getId());
+//        msgToInventory.put("stock", productDto.getStock());
+//        msgToInventory.put("Action", "CREATE");
+
+        InventoryMessage msgToInventory = InventoryMessage.builder()
+                .productId(savedProd.getId())
+                .quantity(productDto.getStock())
+                .action("CREATE")
+                .build();
+
+        log.info("Created product with id :- {} ",savedProd.getId());
+        eventPublisher.sendToInventory(msgToInventory);
+        log.info("Created MSG reached to RabbitMQ,:- {} ", msgToInventory);
         return savedProd;
     }
 
-    public ResponseEntity<Product> update(Long id, Product product){
+    public ResponseEntity<Product> update(Long id, ProductDto productDto){
         Product dbProduct = productRepo.findById(id).orElseThrow(() -> new RuntimeException("Product Not Found"));
-        dbProduct.setName(product.getName());
-        dbProduct.setDescription(product.getDescription());
-        dbProduct.setPrice(product.getPrice());
-        dbProduct.setStock(product.getStock());
+        dbProduct.setName(productDto.getName());
+        dbProduct.setDescription(productDto.getDescription());
+        dbProduct.setPrice(productDto.getPrice());
 
         Product savedProd = productRepo.save(dbProduct);
-        eventPublisher.publishUpdates(savedProd);
+
+//        Map<String, Object> msgToInventory = new HashMap<>();
+//        msgToInventory.put("productId", savedProd.getId());
+//        msgToInventory.put("stock", productDto.getStock());
+//        msgToInventory.put("Action", "UPDATE");
+
+        InventoryMessage msgToInventory = InventoryMessage.builder()
+                        .productId(savedProd.getId())
+                        .quantity(productDto.getStock())
+                        .action("UPDATE")
+                        .build();
+
+        log.info("Updated product with id :- {} ", savedProd.getId());
+        eventPublisher.sendToInventory(msgToInventory);
+        log.info("Updated MSG reached to RabbitMQ, :- {} ", msgToInventory);
         return ResponseEntity.ok(savedProd);
     }
 
     public void delete(Long id){
         productRepo.deleteById(id);
-        eventPublisher.publishDeleted(id);
+
+//        Map<String, Object> msgToInventory = new HashMap<>();
+//        msgToInventory.put("productId", id);
+//        msgToInventory.put("stock", 0);
+//        msgToInventory.put("Action", "DELETE");
+
+        InventoryMessage msgToInventory = InventoryMessage.builder()
+                .productId(id)
+                .quantity(0)
+                .action("DELETE")
+                .build();
+
+        eventPublisher.sendToInventory(msgToInventory);
+        log.info("Deleted product with id :- {} ", id);
     }
 
     public Product getProductById(Long id){

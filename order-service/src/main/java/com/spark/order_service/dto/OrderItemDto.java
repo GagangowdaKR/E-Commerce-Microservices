@@ -7,5 +7,4 @@ public class OrderItemDto {
 
     private Long productId;
     private Integer quantity;
-
 }

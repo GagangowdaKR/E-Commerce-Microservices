@@ -1,5 +1,6 @@
 package com.spark.product_service.service;
 
+import com.spark.product_service.dto.ProductDto;
 import com.spark.product_service.entity.Product;
 import org.springframework.http.ResponseEntity;
 
@@ -10,9 +11,9 @@ public interface ProductService {
 
     Product getProductById(Long id);
 
-    Product create(Product product);
+    Product create(ProductDto productDto);
 
-    ResponseEntity<Product> update(Long id, Product product);
+    ResponseEntity<Product> update(Long id, ProductDto productDto);
 
     void delete(Long id);
 }
