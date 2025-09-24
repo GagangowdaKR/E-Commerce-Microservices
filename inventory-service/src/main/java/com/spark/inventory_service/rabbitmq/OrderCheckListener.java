@@ -4,14 +4,15 @@ import com.spark.inventory_service.dto.OrderCheckRequest;
 import com.spark.inventory_service.dto.OrderCheckResponse;
 import com.spark.inventory_service.entity.Inventory;
 import com.spark.inventory_service.repository.InventoryRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class OrderCheckListener {
 
     private final InventoryRepository inventoryRepo;
@@ -33,11 +34,14 @@ public class OrderCheckListener {
             Inventory inventory = inventoryRepo.findById(productId).orElse(null);
             if(inventory == null || inventory.getStock() < requestedQty){
                 allAvailable = false;
+                log.info("Its a break due to less stock");
+                System.out.println("Currently We Don't have that QTY, Order within : "+inventory.getStock());
                 break;
             }
         }
 
         OrderCheckResponse orderCheckResponse = new OrderCheckResponse();
+        orderCheckResponse.setStatus("NOT_AVAILABLE");
         if(allAvailable){
             //Reduce the stock
             for(Map.Entry<Long, Integer> obj : orderRequest.getProductQuantities().entrySet()){
@@ -45,10 +49,9 @@ public class OrderCheckListener {
                 inventory.setStock(inventory.getStock() - obj.getValue());
                 inventoryRepo.save(inventory);
             }
-            orderCheckResponse.setStatus("COMPLETED");
-        }else{
-            orderCheckResponse.setStatus("FAILED");
+            orderCheckResponse.setStatus("AVAILABLE");
         }
+        orderCheckResponse.setUserId(orderRequest.getUserId());
         orderCheckResponse.setOrderId(orderRequest.getOrderId());
 
         // Notify order-service

@@ -4,7 +4,6 @@ import com.spark.inventory_service.dto.InventoryMessage;
 import com.spark.inventory_service.entity.Inventory;
 import com.spark.inventory_service.repository.InventoryRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
@@ -34,11 +33,13 @@ public class InventoryListener {
                     return;
                 }
                 inventory1.setStock(inventory1.getStock() + message.getQuantity());
+                log.info("Stock is updated from {} to {}",inventory1.getStock(),message.getQuantity());
                 inventoryRepo.save(inventory1);
                 break;
             case "DELETE":
                 inventoryRepo.deleteById(message.getProductId());
                 break;
+            default:break;
         }
     }
 }

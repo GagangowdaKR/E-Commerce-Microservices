@@ -1,4 +1,2 @@
 rootProject.name = 'e-com'
-include 'discovery-server', 'api-gateway', 'auth-service', 'product-service', 'order-service', 'inventory-service'
-
-include 'common-event'
+include 'discovery-server', 'api-gateway', 'auth-service', 'product-service', 'order-service', 'inventory-service', 'payment-service', 'notification-service'

@@ -2,17 +2,17 @@ package com.spark.order_service.controller;
 
 import com.spark.order_service.dto.PlaceOrderRequest;
 import com.spark.order_service.dto.OrderResponse;
+import com.spark.order_service.entity.Order;
 import com.spark.order_service.service.OrderService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
 
-    private OrderService orderService;
+    private final OrderService orderService;
 
     public OrderController(OrderService orderService){
         this.orderService = orderService;
@@ -23,4 +23,13 @@ public class OrderController {
         return orderService.placeOrder(request);
     }
 
+    @GetMapping
+    public List<Order> getAllOrders(){
+        return orderService.getAllOrders();
+    }
+
+    @GetMapping("/{orderNumber}")
+    public Order getOrder(@PathVariable String orderNumber){
+        return orderService.getOrder(orderNumber);
+    }
 }

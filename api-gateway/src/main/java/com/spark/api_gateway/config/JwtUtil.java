@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -16,7 +15,7 @@ import java.util.Date;
 @Slf4j
 public class JwtUtil {
 
-    private final String SECRET = "supersecurekeywithminimum32characterslength";
+    private static final String SECRET = "supersecurekeywithminimum32characterslength";
 
     public Key getSigningKey(){
         return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));

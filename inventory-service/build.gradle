@@ -18,6 +18,9 @@ configurations {
 		extendsFrom annotationProcessor
 	}
 }
+//springBoot {
+//    mainClass.set("com.spark.inventory_service.")
+//}
 
 repositories {
 	mavenCentral()

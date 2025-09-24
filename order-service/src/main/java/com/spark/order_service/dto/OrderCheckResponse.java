@@ -10,4 +10,5 @@ import lombok.*;
 public class OrderCheckResponse {
     private Long orderId;
     private String status;
+    private String userId;
 }

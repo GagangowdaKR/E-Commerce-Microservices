@@ -31,11 +31,6 @@ public class ProductServiceImpl implements ProductService {
         Product product = new Product(productDto.getName(), productDto.getDescription(), productDto.getPrice());
         Product savedProd = productRepo.save(product);
 
-//        Map<String, Object> msgToInventory = new HashMap<>();
-//        msgToInventory.put("productId", savedProd.getId());
-//        msgToInventory.put("stock", productDto.getStock());
-//        msgToInventory.put("Action", "CREATE");
-
         InventoryMessage msgToInventory = InventoryMessage.builder()
                 .productId(savedProd.getId())
                 .quantity(productDto.getStock())
@@ -56,11 +51,6 @@ public class ProductServiceImpl implements ProductService {
 
         Product savedProd = productRepo.save(dbProduct);
 
-//        Map<String, Object> msgToInventory = new HashMap<>();
-//        msgToInventory.put("productId", savedProd.getId());
-//        msgToInventory.put("stock", productDto.getStock());
-//        msgToInventory.put("Action", "UPDATE");
-
         InventoryMessage msgToInventory = InventoryMessage.builder()
                         .productId(savedProd.getId())
                         .quantity(productDto.getStock())
@@ -73,13 +63,9 @@ public class ProductServiceImpl implements ProductService {
         return ResponseEntity.ok(savedProd);
     }
 
+
     public void delete(Long id){
         productRepo.deleteById(id);
-
-//        Map<String, Object> msgToInventory = new HashMap<>();
-//        msgToInventory.put("productId", id);
-//        msgToInventory.put("stock", 0);
-//        msgToInventory.put("Action", "DELETE");
 
         InventoryMessage msgToInventory = InventoryMessage.builder()
                 .productId(id)

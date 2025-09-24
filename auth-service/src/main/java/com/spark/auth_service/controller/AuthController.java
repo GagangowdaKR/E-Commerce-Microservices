@@ -4,7 +4,6 @@ import com.spark.auth_service.config.JwtUtil;
 import com.spark.auth_service.entity.User;
 import com.spark.auth_service.services.AuthService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

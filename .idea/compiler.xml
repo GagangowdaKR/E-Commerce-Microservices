@@ -8,18 +8,24 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.38/57f8f5e02e92a30fd21b80cbd426a4172b5f8e29/lombok-1.18.38.jar" />
         </processorPath>
         <module name="e-com.api-gateway.main" />
-        <module name="e-com.auth-service.main" />
+        <module name="e-com.notification-service.main" />
         <module name="e-com.order-service.main" />
+        <module name="e-com.auth-service.main" />
         <module name="e-com.product-service.main" />
         <module name="e-com.inventory-service.main" />
+        <module name="e-com.payment-service.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="e-com.common-event" target="21" />
+      <module name="e-com.common-event.main" target="21" />
+      <module name="e-com.common-event.test" target="21" />
+      <module name="e-com.inventory-service" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="com.spark.e-com.inventory-service" options="-parameters" />
       <module name="e-com.api-gateway" options="-parameters" />
       <module name="e-com.api-gateway.main" options="-parameters" />
       <module name="e-com.api-gateway.test" options="-parameters" />
@@ -32,9 +38,15 @@
       <module name="e-com.inventory-service" options="-parameters" />
       <module name="e-com.inventory-service.main" options="-parameters" />
       <module name="e-com.inventory-service.test" options="-parameters" />
+      <module name="e-com.notification-service" options="-parameters" />
+      <module name="e-com.notification-service.main" options="-parameters" />
+      <module name="e-com.notification-service.test" options="-parameters" />
       <module name="e-com.order-service" options="-parameters" />
       <module name="e-com.order-service.main" options="-parameters" />
       <module name="e-com.order-service.test" options="-parameters" />
+      <module name="e-com.payment-service" options="-parameters" />
+      <module name="e-com.payment-service.main" options="-parameters" />
+      <module name="e-com.payment-service.test" options="-parameters" />
       <module name="e-com.product-service" options="-parameters" />
       <module name="e-com.product-service.main" options="-parameters" />
       <module name="e-com.product-service.test" options="-parameters" />

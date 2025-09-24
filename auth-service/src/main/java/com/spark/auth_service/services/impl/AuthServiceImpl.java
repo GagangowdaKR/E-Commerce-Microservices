@@ -5,7 +5,6 @@ import com.spark.auth_service.entity.User;
 import com.spark.auth_service.repository.UserRepository;
 import com.spark.auth_service.services.AuthService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,9 +17,9 @@ import java.util.Map;
 @Slf4j
 public class AuthServiceImpl implements AuthService {
 
-    private UserRepository userRepo;
-    private JwtUtil jwtUtil;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepo;
+    private final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
 
     public AuthServiceImpl(UserRepository userRepo, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userRepo = userRepo;
@@ -66,13 +65,4 @@ public class AuthServiceImpl implements AuthService {
         log.info("jwt token has been generated and sent successfully");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-    /*
-        @GetMapping("/validate")
-    public String validateToken(@RequestParam String token) {
-        String username = jwtUtil.extractUsername(token);
-        String role = jwtUtil.extractRole(token);
-        return "Token valid for user: " + username + " with role: " + role;
-    }
-     */
 }
