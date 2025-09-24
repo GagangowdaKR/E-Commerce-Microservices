@@ -9,12 +9,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderStatusListener {
 
-    @Autowired
-    private OrderService orderService;
+
+    private final OrderService orderService;
+
+    public  OrderStatusListener(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @RabbitListener(queues = RabbitMQConfig.ORDER_STATUS_QUEUE)
     public void receiveOrderStatus(OrderCheckResponse statusMessage) {
-        orderService.updateOrderStatus(statusMessage.getOrderId(), statusMessage.getStatus());
+        System.out.println("order id : " + statusMessage.getOrderId());
+        System.out.println("order status : " + statusMessage.getStatus());
+
+        orderService.updateOrderStatus(statusMessage);
     }
 }
 

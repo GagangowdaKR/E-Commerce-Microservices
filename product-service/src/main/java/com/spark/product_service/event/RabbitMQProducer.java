@@ -4,8 +4,6 @@ import com.spark.product_service.dto.InventoryMessage;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 @Service
 public class RabbitMQProducer {
 

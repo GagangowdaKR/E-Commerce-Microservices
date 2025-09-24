@@ -22,7 +22,9 @@ public class RabbitMQConfig {
     public static final String INVENTORY_ROUTING_KEY = "inventory.routing.key";
 
     public static final String ORDER_STATUS_QUEUE = "order.status.queue";
-    public static final String PAYMENT_QUEUE = "payment.queue";
+    public static final String PAYMENT_QUEUE = "payment.queue"; // -> notification-service
+
+    public static final String ORDER_CONFIRM_QUEUE = "order.confirmed.queue"; // final
 
     @Bean
     public TopicExchange orderExchange(){
@@ -36,6 +38,11 @@ public class RabbitMQConfig {
     public Queue orderStatusQueue(){
         return new Queue(ORDER_STATUS_QUEUE);
     }
+    @Bean
+    public Queue orderConfirmedQueue(){
+        return new Queue(ORDER_CONFIRM_QUEUE);
+    }
+
     @Bean
     public Queue paymentQueue(){
         return new Queue(PAYMENT_QUEUE);

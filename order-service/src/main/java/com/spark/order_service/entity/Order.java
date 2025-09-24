@@ -28,7 +28,7 @@ public class Order {
 
     private String status; // Pending, Confirmed, Canceled
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItem> itemList;
 
 }
